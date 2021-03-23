@@ -6,7 +6,7 @@ RaisedAmount & donationsCount JSON: <https://potti.mieli.fi/f/Collection/GetDyna
 
 Donations JSON: <https://potti.mieli.fi/f/Donation/GetDonations/?collectionId=COL-16-3552&pageSize=50&startAt=0>
 
-## Some links to help with project
+## Some links to help with the project
 
 - <https://typeofnan.dev/your-first-react-typescript-project-todo-app/>
 - <https://reactjs.org/docs/getting-started.html>
