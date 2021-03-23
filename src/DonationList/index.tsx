@@ -1,64 +1,46 @@
+import fetch from 'node-fetch';
 import React from 'react';
 import './index.css';
-import fetch from 'node-fetch';
 
-function DonationList(): JSX.Element {
+export default function DonationList(): JSX.Element {
+  const donationsApi = new DonationLister();
 
-  // const donations = iGetDonations('https://potti.mieli.fi/f/Donation/GetDonations/?collectionId=COL-16-3552&pageSize=50&startAt=0');
+  donationsApi.GetDonations().then((donations) => {
+    donations.map((donation) => console.log(donation));
+  });
 
-  // console.log(donations);
-
-  return <>
-  
-  </>;
+  return (
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>Nimimerkki</th>
+            <th>Lahjoitus</th>
+            <th>Viesti</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </>
+  );
 }
 
-export default DonationList;
+class DonationsData {
+  Name: string;
+  Amount: number;
+  Message: string;
 
-class DonationsData{
-  name: string;
-  amount: number;
-  message: string;
-
-  constructor(name: string, amount: number, message: string){
-    this.name = name;
-    this.amount = amount;
-    this.message = message;
+  constructor(Name: string, Amount: number, Message: string) {
+    this.Name = Name;
+    this.Amount = Amount;
+    this.Message = Message;
   }
-}
-
-// eslint-disable-next-line
-function FormatDonations(donation: any): DonationsData{
-  return {name: donation.name, amount: donation.amount, message: donation.message};
 }
 
 class DonationLister {
-  GetDonations(): Promise<DonationsData[]>{
-    return fetch('https://potti.mieli.fi/f/Donation/GetDonations/?collectionId=COL-16-3552&pageSize=50&startAt=0')
-      .then(res => res.json())
-      .then(res => res.map((donation: DonationsData[]) => FormatDonations(donation)));
+  GetDonations(): Promise<DonationsData[]> {
+    return fetch(
+      'https://potti.mieli.fi/f/Donation/GetDonations/?collectionId=COL-16-3552&pageSize=150&startAt=0'
+    ).then((res) => res.json());
   }
 }
-
-const donationsApi = new DonationLister();
-
-donationsApi.GetDonations().then(donations => console.log(donations[0]['name']));
-
-
-// interface iDonationsData  {
-//   DonationId: string,
-//   Name: string,
-//   Amount: number,
-//   Message: string
-// }
-// 
-// async function iGetDonations(JsonUrl: string): Promise<iDonationsData>{
-// 
-//   const response = await fetch(JsonUrl);
-//   const data = await response.json();
-// 
-//   // const objs = JSON.parse(data) as MyObj[];
-// 
-//   return data;
-// }
-// 
